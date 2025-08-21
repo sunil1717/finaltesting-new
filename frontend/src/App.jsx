@@ -40,7 +40,7 @@ import Inspections from "./pages/services/Inspections"
 
 
 
-
+import ScrollToTop from './components/ScrollToTop';
 
 
 
@@ -54,6 +54,7 @@ export default function App() {
 }, []);
   return (
      <ConfirmProvider>
+      <ScrollToTop />
 
     <Routes>
       <Route path="/" element={<HomePage />} />

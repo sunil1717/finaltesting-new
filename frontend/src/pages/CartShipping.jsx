@@ -29,7 +29,7 @@ const CartShipping = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen mt-25 sm:mt-40 bg-gray-50 p-4 sm:p-6 md:p-8">
+      <div className="min-h-screen mt-28 sm:mt-40 bg-gray-50 p-4 sm:p-6 md:p-8">
         {/* Progress Steps */}
         <div className="flex justify-center items-center space-x-3 mb-10 text-sm sm:text-base">
           <div className="text-red-700 font-medium">1. Shopping Cart</div>

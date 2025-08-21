@@ -243,7 +243,7 @@ const CheckoutPage = () => {
       <Navbar />
 
       {/* Progress Bar */}
-      <div className="flex justify-center items-center space-x-3 mt-25 p-4 sm:mt-45 mb-8">
+      <div className="flex justify-center items-center space-x-3 mt-28 p-4 sm:mt-45 mb-8">
         <div className="text-red-700 font-medium">1. Shopping Cart</div>
         <span className="text-gray-400">—</span>
         <div className="text-red-700 font-medium">2. Checkout</div>

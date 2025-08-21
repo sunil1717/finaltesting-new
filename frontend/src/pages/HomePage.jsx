@@ -116,7 +116,7 @@ export default function HomePage() {
 
       const res = await axios.get(`/api/tyreall/brand/${brand}`);
 
-      
+
 
 
 
@@ -412,9 +412,9 @@ export default function HomePage() {
                   }}
 
                   disabled={isAlreadyInCart || !selectedOption}
-                  className={`w-full  ${isAlreadyInCart ? "bg-red-400 " : isOutofstock ? "bg-gray-400 " : !selectedOption ? "bg-gray-400 " : " bg-red-500 hover:bg-red-600"}  text-white font-semibold py-2 rounded-lg shadow-md transition`}
+                  className={`w-full  ${isAlreadyInCart ? "bg-red-400 " : isOutofstock ? "bg-red-400 " : !selectedOption ? "bg-gray-400 " : " bg-red-500 hover:bg-red-600"}  text-white font-semibold py-2 rounded-lg shadow-md transition`}
                 >
-                  {isAlreadyInCart ? "Already in Cart" : isOutofstock ? <span><a href="#contact">Contact us</a></span>: "Add to Cart "}
+                  {isAlreadyInCart ? "Already in Cart" : isOutofstock ? <span><a href="#contact">Contact us</a></span> : "Add to Cart "}
                 </button>
 
 
@@ -484,6 +484,8 @@ export default function HomePage() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+
 
 
 
@@ -585,18 +587,13 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="font-sans  overflow-y-hidden">
+      <div className="font-sans ">
 
         {searching && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-md transition-opacity duration-500">
             <div className="flex flex-col items-center justify-center space-y-4  rounded-xl ">
 
-              {/* Logo */}
-              {/* <img
-                src="/logoB.jpg"
-                alt="Loading..."
-                className="w-15 h-10 animate-ping bg-transparent opacity-15"
-              /> */}
+
               <span className='text-white '>Searching Plz Wait...</span>
 
               {/* Animated progress bar */}
@@ -863,7 +860,7 @@ export default function HomePage() {
         )}
 
         {/* Features */}
-        <section>
+        <section  >
           <div className="bg-gray-100 py-10 px-6 sm:px-10 lg:px-24">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
               {infoData.map((item, index) => (
@@ -887,230 +884,250 @@ export default function HomePage() {
         </section>
 
 
-        {/* Recommended Products */}
-        {hasSearched && tyres.length > 0 && <RecommendedProducts tyres={tyres} />}
 
+
+
+
+        {/* Recommended Products */}
+        <div ref={resultsRef}>
+          {hasSearched && tyres.length > 0 && <RecommendedProducts tyres={tyres} />}
+        </div>
 
         {/*Filter section */}
         {hasSearched && (
-          <div className=" max-w-full mx-auto px-4 sm:px-4 lg:px-6 mt-1 ">
-            <div className="flex flex-col lg:flex-row gap-6">
-              {/* Sidebar Filters */}
-              <div className="lg:w-1/4 bg-white shadow rounded p-4">
-
+          <>
             
-              
-                <h3 className="text-lg font-semibold bg-red-200 mb-3 px-3">Filter Tyres</h3>
-
-                <div className="space-y-3">
-                  {/* Brand Filter */}
-                  <div className="width-full border border-gray-400 rounded px-3 space-y-2 py-2">
-                    <select
-                      value={filters.brand}
-                      name='brand'
-                      onChange={handleChange}
-                      className={`w-full border ${filters.brand ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-                      <option value="">All Brands</option>
-                      {uniqueBrands.map((b) => (
-                        <option key={b} value={b}>{b}</option>
-                      ))}
-                    </select>
-
-                    {/* Type Filter */}
-                    <select
-                      value={filters.type}
-                      name='type'
-                      onChange={handleChange}
-                      className={`w-full border ${filters.type ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-                      <option value="">All Types</option>
-                      {uniqueTypes.map((t) => (
-                        <option key={t} value={t}>{t}</option>
-                      ))}
-                    </select>
-
-                    {/* Sort by Price */}
-                    <select
-                      value={filters.sort}
-                      name='sort'
-                      onChange={handleChange}
-                      className={`w-full border ${filters.sort ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-                      <option value="">Sort by Price</option>
-                      <option value="low-to-high">Low to High</option>
-                      <option value="high-to-low">High to Low</option>
-                    </select>
-                  </div>
-
-                  <div className="width-full border border-gray-400 rounded px-3 space-y-2 py-2">
-                    <select type="number"
-                      name="width"
-                      placeholder="Width"
-                      value={filters.width}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.width ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-                      <option value="">All Width</option>
-
-                      {uniqueWidths.map((w) => (
-                        <option key={w} value={w}>{w}</option>
-                      ))
-
-                      }
-                    </select>
-                    <select type="number"
-                      name="profile"
-                      placeholder="Profile"
-                      value={filters.profile}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.profile ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-
-                      <option value="">All Profile</option>
-
-                      {uniqueProfiles.map((p) => (
-                        <option key={p} value={p}>{p}</option>
-                      ))
-
-                      }
-
-                    </select>
-                    <select type="number"
-                      name="rim"
-                      placeholder="Rim Size"
-                      value={filters.rim}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.rim ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-
-                      <option value="">All Rimsize</option>
-
-                      {uniqueRimSizes.map((r) => (
-                        <option key={r} value={r}>{r}</option>
-                      ))
-
-                      }
-
-                    </select>
-                    <select type="text"
-                      name="load_index"
-                      placeholder="Load Index"
-                      value={filters.load_index}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.load_index ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-
-                      <option value="">All LoadIndex</option>
-
-                      {filterOptions.loadIndex.map((l) => (
-                        <option key={l} value={l}>{l}</option>
-                      ))
-
-                      }
-
-
-                    </select>
-
-
-
-                    <select type="text"
-                      name="speed_rating"
-                      placeholder="Speed Rating"
-                      value={filters.speed_rating}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.speed_rating ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
-                    >
-
-                      <option value="">All SpeedRating</option>
-
-                      {filterOptions.speedRating.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))
-
-                      }
-
-                    </select>
-
-                    <select name="runflat"
-                      value={filters.runflat}
-                      onChange={handleChange}
-                      className={`w-full border ${filters.runflat ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}>
-                      <option value="">RunFlat?</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                    </select>
-                  </div>
-                </div>
-                
-              </div>
 
 
 
 
 
 
-              {/* Results Section */}
-              <div ref={resultsRef} className=" w-full">
-
-                {/* Size Summary Box */}
-
-                <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between bg-red-200 border border-gray-300 rounded-lg px-4 py-3 shadow-md mt-3 gap-3">
-
-                  {/* Filter Chips */}
-                  <div className="flex flex-wrap gap-2 text-sm text-gray-700">
-                    {/* Width */}
-                    <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
-                      Width : <span className="font-semibold">{filters.width || "-"}</span>
-                    </span>
-
-                    {/* Profile */}
-                    <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
-                      Profile : <span className="font-semibold">{filters.profile || "-"}</span>
-                    </span>
-
-                    {/* Rim Size */}
-                    <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
-                      Rim Size : <span className="font-semibold">{filters.rim || "-"}</span>
-                    </span>
-                  </div>
-
-                  {/* Total count */}
-                  <div className="text-gray-600 text-sm">
-                    Total: <span className="font-semibold text-gray-900">{tyres.length} {tyres.length <= 1 ? "Result" : "Results"}</span>
-                  </div>
-                </div>
+            <div className=" max-w-full mx-auto px-4 sm:px-4 lg:px-6 mt-1 ">
 
 
 
-
-                <h1 className='text-start text-3xl text-gray-800 m-2 font-medium'>Browse our full range</h1>
-
-
-
+              <div className="flex flex-col lg:flex-row gap-6">
+                {/* Sidebar Filters */}
+                <div className="lg:w-1/4 bg-white shadow rounded p-4">
 
 
 
-                {filteredResults.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {filteredResults.map((tyre, index) => (
-                      <div key={getTyreKey(tyre) + index}>
-                        {renderTyreCard(tyre)}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  hasSearched && !searching && (
-                    <div className="text-center text-black font-bold  text-2xl sm:text-3xl mt-10">
-                      <p>No tyres found for your search. Please try different criteria or Contact with us in <span className='text-red-500'>5425515</span>  .</p>
+                  <h3 className="text-lg font-semibold bg-red-200 mb-3 px-3">Filter Tyres</h3>
+
+                  <div className="space-y-3">
+                    {/* Brand Filter */}
+                    <div className="width-full border border-gray-400 rounded px-3 space-y-2 py-2">
+                      <select
+                        value={filters.brand}
+                        name='brand'
+                        onChange={handleChange}
+                        className={`w-full border ${filters.brand ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+                        <option value="">All Brands</option>
+                        {uniqueBrands.map((b) => (
+                          <option key={b} value={b}>{b}</option>
+                        ))}
+                      </select>
+
+                      {/* Type Filter */}
+                      <select
+                        value={filters.type}
+                        name='type'
+                        onChange={handleChange}
+                        className={`w-full border ${filters.type ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+                        <option value="">All Types</option>
+                        {uniqueTypes.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+
+                      {/* Sort by Price */}
+                      <select
+                        value={filters.sort}
+                        name='sort'
+                        onChange={handleChange}
+                        className={`w-full border ${filters.sort ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+                        <option value="">Sort by Price</option>
+                        <option value="low-to-high">Low to High</option>
+                        <option value="high-to-low">High to Low</option>
+                      </select>
                     </div>
-                  )
-                )}
-              </div>
+
+                    <div className="width-full border border-gray-400 rounded px-3 space-y-2 py-2">
+                      <select type="number"
+                        name="width"
+                        placeholder="Width"
+                        value={filters.width}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.width ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+                        <option value="">All Width</option>
+
+                        {uniqueWidths.map((w) => (
+                          <option key={w} value={w}>{w}</option>
+                        ))
+
+                        }
+                      </select>
+                      <select type="number"
+                        name="profile"
+                        placeholder="Profile"
+                        value={filters.profile}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.profile ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+
+                        <option value="">All Profile</option>
+
+                        {uniqueProfiles.map((p) => (
+                          <option key={p} value={p}>{p}</option>
+                        ))
+
+                        }
+
+                      </select>
+                      <select type="number"
+                        name="rim"
+                        placeholder="Rim Size"
+                        value={filters.rim}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.rim ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+
+                        <option value="">All Rimsize</option>
+
+                        {uniqueRimSizes.map((r) => (
+                          <option key={r} value={r}>{r}</option>
+                        ))
+
+                        }
+
+                      </select>
+                      <select type="text"
+                        name="load_index"
+                        placeholder="Load Index"
+                        value={filters.load_index}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.load_index ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+
+                        <option value="">All LoadIndex</option>
+
+                        {filterOptions.loadIndex.map((l) => (
+                          <option key={l} value={l}>{l}</option>
+                        ))
+
+                        }
+
+
+                      </select>
+
+
+
+                      <select type="text"
+                        name="speed_rating"
+                        placeholder="Speed Rating"
+                        value={filters.speed_rating}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.speed_rating ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}
+                      >
+
+                        <option value="">All SpeedRating</option>
+
+                        {filterOptions.speedRating.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))
+
+                        }
+
+                      </select>
+
+                      <select name="runflat"
+                        value={filters.runflat}
+                        onChange={handleChange}
+                        className={`w-full border ${filters.runflat ? "bg-red-200" : ""} border-gray-500 rounded px-3 py-2`}>
+                        <option value="">RunFlat?</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+
+
+                {/* Results Section */}
+                <div className=" w-full">
+
+                  {/* Size Summary Box */}
+
+                  <div className="sticky sm:top-38 top-29 z-15">
+
+              <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between bg-red-200 border border-gray-300 rounded-lg px-4 py-3 shadow-md mt-3 gap-3">
+
+                {/* Filter Chips */}
+                <div className="flex flex-wrap gap-2 text-sm text-gray-700">
+                  {/* Width */}
+                  <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
+                    Width : <span className="font-semibold">{filters.width || "-"}</span>
+                  </span>
+
+                  {/* Profile */}
+                  <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
+                    Profile : <span className="font-semibold">{filters.profile || "-"}</span>
+                  </span>
+
+                  {/* Rim Size */}
+                  <span className="bg-gray-50 px-3 py-1 rounded-lg shadow-sm">
+                    Rim Size : <span className="font-semibold">{filters.rim || "-"}</span>
+                  </span>
+                </div>
+
+                {/* Total count */}
+                <div className="text-gray-600 text-sm">
+                  Total: <span className="font-semibold text-gray-900">{tyres.length} {tyres.length <= 1 ? "Result" : "Results"}</span>
+                </div>
               </div>
             </div>
-          
-        )}
+
+
+
+
+
+                  <h1 className='text-start text-3xl text-gray-800 m-2 font-medium'>Browse our full range</h1>
+
+
+
+
+
+
+                  {filteredResults.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                      {filteredResults.map((tyre, index) => (
+                        <div key={getTyreKey(tyre) + index}>
+                          {renderTyreCard(tyre)}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    hasSearched && !searching && (
+                      <div className="text-center text-black font-bold  text-2xl sm:text-3xl mt-10">
+                        <p>No tyres found for your search. Please try different criteria or Contact with us in <span className='text-red-500'>5425515</span>  .</p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+          </>)}
 
 
 
