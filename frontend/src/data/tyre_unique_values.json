@@ -1,0 +1,814 @@
+{
+    "Brand": [
+        "ACCELERA",
+        "ACHILLES",
+        "ALLOSAURUS",
+        "AOTELI",
+        "APLUS",
+        "ARDENT",
+        "ATLAS",
+        "AUSTONE",
+        "BFGOODRICH",
+        "BRIDGESTONE",
+        "BRIDGESTONE ",
+        "COMFORSER",
+        "CONTINENTAL",
+        "COOPER",
+        "DAVANTI",
+        "DEWOSTONE",
+        "DUNLOP",
+        "DUNLOP SP",
+        "FALKEN",
+        "FARROAD",
+        "FEDERAL",
+        "FIRESTONE",
+        "FORCELAND",
+        "FRZTRAC",
+        "ForceLand",
+        "GENERAL",
+        "GENERAL TIRE",
+        "GODDARD",
+        "GOODRIDE",
+        "GOODYEAR",
+        "GOODYEAR ",
+        "GRIPMAX",
+        "GT RADIAL",
+        "HABILEAD",
+        "HAIDA",
+        "HANKOOK",
+        "HEROVIC",
+        "HIGHWAY",
+        "Hankook",
+        "KENDA",
+        "KINGSTAR BY HANKOOK",
+        "KUMHO",
+        "MARSHAL",
+        "MASSIMO",
+        "MASTERCRAFT",
+        "MAXTREK",
+        "MAXXIS",
+        "MAYRUN",
+        "MICHELIN",
+        "MINERVA",
+        "MINNELL",
+        "Michelin",
+        "NANKANG",
+        "NEUTON",
+        "NEXEN",
+        "NITTO",
+        "Nankang",
+        "OPALS",
+        "PACE",
+        "PIRELLI",
+        "PIRELLI ",
+        "POWERTRAC",
+        "Pirelli",
+        "RADAR",
+        "RANGER",
+        "RAPID",
+        "ROADCLAW",
+        "ROADSHINE",
+        "ROADSTONE",
+        "ROYAL BLACK",
+        "SAFERICH",
+        "SILVERSTONE",
+        "SUMAXX",
+        "SUMITOMO",
+        "SUPERIA",
+        "TOLEDO",
+        "TOYO",
+        "TRACMAX",
+        "TRAZANO",
+        "TRIANGLE",
+        "WESTLAKE",
+        "WIDEWAY",
+        "WINDA",
+        "WINRUN",
+        "YOKOHAMA",
+        "ZETA",
+        "ZETUM"
+    ],
+
+  "Type": [
+        "(VAN - L/T)",
+        "4WD",
+        "4WD A/T",
+        "4WD H/T",
+        "4WD H/T PERFORMANCE",
+        "4WD Highway",
+        "4X4",
+        "4X4 / SUV (A-T)",
+        "4X4 / SUV (EV UHP)",
+        "4X4 / SUV (H-T)",
+        "4X4 / SUV (M/T)",
+        "4X4 / SUV (UHP)",
+        "4X4 LT",
+        "4X4 Light Truck",
+        "4X4 M/T",
+        "4x4",
+        "AT",
+        "CAR",
+        "CAR - SUV",
+        "CUV",
+        "E UHP",
+        "EV",
+        "EV TYRE",
+        "EV UHP",
+        "IVECO DAILY",
+        "LIGHT TRUCK",
+        "LIGHT VAN",
+        "LIGHT VAN - PREMIUM",
+        "LT",
+        "LTR",
+        "LVR",
+        "Light Truck",
+        "Light Van",
+        "Light Van - Premium",
+        "LightTruck",
+        "Ligt Truck",
+        "Motorsport",
+        "P/T - PREMIUM",
+        "P/T - Premium",
+        "PASS (EV UHP)",
+        "PASS (PER)",
+        "PASS (UHP)",
+        "PASS TOURING - PREM",
+        "PASSENGER",
+        "PASSENGER CAR",
+        "PC",
+        "PCR",
+        "PCR ECO",
+        "PCR PREMIUM",
+        "PSR",
+        "Passenger",
+        "Passenger Car",
+        "Passenger Premium",
+        "Passenger Touring",
+        "RADIAL",
+        "RUN FLAT",
+        "RUNFLAT",
+        "RV 4WD & SUV",
+        "Runflat",
+        "Runflat Runflat",
+        "SEMI SLICK",
+        "SEMI-SLICK",
+        "SUV",
+        "SUV & 4WD",
+        "SUV (UHP)",
+        "SUV / 4X4",
+        "SUV A",
+        "SUV H",
+        "Semi Slick",
+        "Semi Slicks",
+        "TRUCK",
+        "UHP",
+        "UHP TYRE",
+        "UHP Tyre",
+        "VAN",
+        "VAN - L/T",
+        "Van",
+        "Van / LT",
+        "WHITE WALL",
+        "nan"
+    ],
+    
+    "UNLOADING IN 24 HRS": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+    ],
+     "SIZE": [
+        "155/65R14",
+        "155/70R13",
+        "155/80R13",
+        "165/55R14",
+        "165/60R14",
+        "165/65R13",
+        "165/65R14",
+        "165/70R13",
+        "165/70R13 ",
+        "165/70R14",
+        "175/55R15",
+        "175/60R15",
+        "175/65R14",
+        "175/65R14C",
+        "175/65R15",
+        "175/70R13",
+        "175/70R14",
+        "175/70R14C",
+        "185/55R15",
+        "185/55R16",
+        "185/60R14",
+        "185/60R15",
+        "185/65R14",
+        "185/65R15",
+        "185/70R13",
+        "185/70R14",
+        "185R14",
+        "185R14C",
+        "195/45R16",
+        "195/50R15",
+        "195/50R16",
+        "195/50ZR15",
+        "195/55R15",
+        "195/55R16",
+        "195/55RF16",
+        "195/55ZR16",
+        "195/60/16",
+        "195/60R16",
+        "195/65/15",
+        "195/65R15",
+        "195/65R16",
+        "195/65R16C",
+        "195/70R14",
+        "195/70R15",
+        "195/70R15C",
+        "195/75R16",
+        "195/75R16C",
+        "195R14",
+        "195R14C",
+        "195R15",
+        "195R15C",
+        "205/40R17",
+        "205/45/15",
+        "205/45/17",
+        "205/45/17 ",
+        "205/45R16",
+        "205/45ZR16",
+        "205/50/16",
+        "205/50/17",
+        "205/55/16",
+        "205/55R16",
+        "205/55R16 ",
+        "205/55R16 RunFlat",
+        "205/55ZR16",
+        "205/60/15",
+        "205/60/16",
+        "205/60R15",
+        "205/65/15",
+        "205/65/16",
+        "205/65R15",
+        "205/65R15C",
+        "205/65R16",
+        "205/65R16C",
+        "205/70/15",
+        "205/70/15C",
+        "205/70R15",
+        "205/70R15C",
+        "205/75R16",
+        "205/75R16C",
+        "215/35R18",
+        "215/35R19",
+        "215/35ZR19",
+        "215/40/18",
+        "215/40R18",
+        "215/45/17",
+        "215/45R16",
+        "215/45R17",
+        "215/50/17",
+        "215/50R17",
+        "215/50R18",
+        "215/50ZR17",
+        "215/55R16",
+        "215/55R17",
+        "215/55R18",
+        "215/60/17",
+        "215/60R16",
+        "215/60R17",
+        "215/60R17C",
+        "215/65/15",
+        "215/65R15",
+        "215/65R15C",
+        "215/65R16",
+        "215/65R17",
+        "215/70R15",
+        "215/70R15C",
+        "215/70R16",
+        "215/75R15",
+        "215/75R16",
+        "215/75R16C",
+        "215/85R16",
+        "225/40/18",
+        "225/40R18",
+        "225/40R18 ",
+        "225/40R19",
+        "225/40ZR18",
+        "225/40ZR19",
+        "225/45R17",
+        "225/45R18",
+        "225/45R19",
+        "225/45RF17",
+        "225/45ZR17",
+        "225/45ZR18",
+        "225/45ZR19",
+        "225/50/17",
+        "225/50/17RFT",
+        "225/50/18",
+        "225/50R16",
+        "225/50R17",
+        "225/50R18",
+        "225/50R18RFT",
+        "225/50RF18",
+        "225/50ZR16",
+        "225/50ZR17",
+        "225/50ZR18",
+        "225/55/16",
+        "225/55/17",
+        "225/55R16",
+        "225/55R17",
+        "225/55R17C",
+        "225/55R17RFT",
+        "225/55R18",
+        "225/55R19",
+        "225/55ZR17",
+        "225/55ZR19",
+        "225/60R16",
+        "225/60R17",
+        "225/60R18",
+        "225/65R16",
+        "225/65R17",
+        "225/70R15",
+        "225/70R15C",
+        "225/70R15CP",
+        "225/70R16",
+        "225/75/16",
+        "225/75/16C",
+        "225/75R16",
+        "225/75R16C",
+        "235/35R18",
+        "235/35R19",
+        "235/35ZR19",
+        "235/40/19",
+        "235/40R18",
+        "235/40R19",
+        "235/40ZR18",
+        "235/40ZR19",
+        "235/45/17",
+        "235/45/18",
+        "235/45/19",
+        "235/45R17",
+        "235/45R18",
+        "235/45R19",
+        "235/45ZR17",
+        "235/45ZR18",
+        "235/45ZR19",
+        "235/50/18",
+        "235/50/19",
+        "235/50/20",
+        "235/50R17",
+        "235/50R18",
+        "235/50R19",
+        "235/50R20",
+        "235/50R20RFT",
+        "235/50RF18",
+        "235/50ZR18",
+        "235/55/17",
+        "235/55/18",
+        "235/55/19",
+        "235/55/20",
+        "235/55R17",
+        "235/55R18",
+        "235/55R19",
+        "235/55R20",
+        "235/55ZR17",
+        "235/55ZR20",
+        "235/60/16",
+        "235/60/17",
+        "235/60R16",
+        "235/60R17",
+        "235/60R18",
+        "L225/75R16",
+        "LT225/70R16",
+        "LT225/75R16",
+        "LT235/60R17",
+        "nan"
+    ],
+     "loadIndex": [
+        "10",
+        "16",
+        "18",
+        "52",
+        "56",
+        "72",
+        "75",
+        "77",
+        "79",
+        "80",
+        "81",
+        "82",
+        "83",
+        "84",
+        "85",
+        "86",
+        "87",
+        "88",
+        "89",
+        "90",
+        "91",
+        "92",
+        "93",
+        "94",
+        "95",
+        "96",
+        "97",
+        "98",
+        "99",
+        "100",
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "118",
+        "120",
+        "121",
+        "9997",
+        "10097",
+        "94100"
+    ],
+    "speedRating": [
+        "H",
+        "K",
+        "L",
+        "N",
+        "P",
+        "PLY",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "V",
+        "W",
+        "Y"
+    ],
+    
+
+    "BrandLogo":[
+    {
+        "brand": "ACCELERA",
+        "logo_url": null
+    },
+    {
+        "brand": "ACHILLES",
+        "logo_url": null
+    },
+    {
+        "brand": "ALLOSAURUS",
+        "logo_url": null
+    },
+    {
+        "brand": "AOTELI",
+        "logo_url": null
+    },
+    {
+        "brand": "APLUS",
+        "logo_url": null
+    },
+    {
+        "brand": "ARDENT",
+        "logo_url": null
+    },
+    {
+        "brand": "ATLAS",
+        "logo_url": null
+    },
+    {
+        "brand": "AUSTONE",
+        "logo_url": null
+    },
+    {
+        "brand": "BFGOODRICH",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052881/brand_logos/pvr0ji9btlkve51lvsaz.png"
+    },
+    {
+        "brand": "BRIDGESTONE",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052875/brand_logos/xhexljrbwebtmeueqsqs.jpg"
+    },
+    {
+        "brand": "COMFORSER",
+        "logo_url": null
+    },
+    {
+        "brand": "CONTINENTAL",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052874/brand_logos/pisezznhk0isxl1l9h57.png"
+    },
+    {
+        "brand": "COOPER",
+        "logo_url": null
+    },
+    {
+        "brand": "DAVANTI",
+        "logo_url": null
+    },
+    {
+        "brand": "DEWOSTONE",
+        "logo_url": null
+    },
+    {
+        "brand": "DUNLOP",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052877/brand_logos/dr3gv93cozpgkeocf2q8.png"
+    },
+    {
+        "brand": "DUNLOP SP",
+        "logo_url": null
+    },
+    {
+        "brand": "FALKEN",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052884/brand_logos/tbqahktabaaqz5d1k3v0.png"
+    },
+    {
+        "brand": "FARROAD",
+        "logo_url": null
+    },
+    {
+        "brand": "FEDERAL",
+        "logo_url": null
+    },
+    {
+        "brand": "FIRESTONE",
+        "logo_url": null
+    },
+    {
+        "brand": "FORCELAND",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052945/brand_logos/hkiswijzxuxfkjdoa0zi.png"
+    },
+    {
+        "brand": "FRZTRAC",
+        "logo_url": null
+    },
+    {
+        "brand": "ForceLand",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052945/brand_logos/hkiswijzxuxfkjdoa0zi.png"
+    },
+    {
+        "brand": "GENERAL",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052887/brand_logos/jie2dcyhrwtgwm5zv44o.png"
+    },
+    {
+        "brand": "GENERAL TIRE",
+        "logo_url": null
+    },
+    {
+        "brand": "GODDARD",
+        "logo_url": null
+    },
+    {
+        "brand": "GOODRIDE",
+        "logo_url": null
+    },
+    {
+        "brand": "GOODYEAR",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052878/brand_logos/fz8elsodh75luqsnpaye.png"
+    },
+    {
+        "brand": "GRIPMAX",
+        "logo_url": null
+    },
+    {
+        "brand": "GT RADIAL",
+        "logo_url": null
+    },
+    {
+        "brand": "HABILEAD",
+        "logo_url": null
+    },
+    {
+        "brand": "HAIDA",
+        "logo_url": null
+    },
+    {
+        "brand": "HANKOOK",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052867/brand_logos/xcfjfe4ptwp1ist1x8bk.png"
+    },
+    {
+        "brand": "HEROVIC",
+        "logo_url": null
+    },
+    {
+        "brand": "HIGHWAY",
+        "logo_url": null
+    },
+    {
+        "brand": "Hankook",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052867/brand_logos/xcfjfe4ptwp1ist1x8bk.png"
+    },
+    {
+        "brand": "KENDA",
+        "logo_url": null
+    },
+    {
+        "brand": "KINGSTAR BY HANKOOK",
+        "logo_url": null
+    },
+    {
+        "brand": "KUMHO",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052883/brand_logos/wlre706vra6dpadisf83.png"
+    },
+    {
+        "brand": "MARSHAL",
+        "logo_url": null
+    },
+    {
+        "brand": "MASSIMO",
+        "logo_url": null
+    },
+    {
+        "brand": "MASTERCRAFT",
+        "logo_url": null
+    },
+    {
+        "brand": "MAXTREK",
+        "logo_url": null
+    },
+    {
+        "brand": "MAXXIS",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052868/brand_logos/wvngp5sgys0bxvcfwq2h.jpg"
+    },
+    {
+        "brand": "MAYRUN",
+        "logo_url": null
+    },
+    {
+        "brand": "MICHELIN",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052871/brand_logos/q7ywyzn2lzhru69ualtu.jpg"
+    },
+    {
+        "brand": "MINERVA",
+        "logo_url": null
+    },
+    {
+        "brand": "MINNELL",
+        "logo_url": null
+    },
+    {
+        "brand": "Michelin",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052871/brand_logos/q7ywyzn2lzhru69ualtu.jpg"
+    },
+    {
+        "brand": "NANKANG",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052864/brand_logos/fts40jkqo418lk61z5s9.png"
+    },
+    {
+        "brand": "NEUTON",
+        "logo_url": null
+    },
+    {
+        "brand": "NEXEN",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052863/brand_logos/xirw3fvyxepkorfzhsuu.png"
+    },
+    {
+        "brand": "NITTO",
+        "logo_url": null
+    },
+    {
+        "brand": "Nankang",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052864/brand_logos/fts40jkqo418lk61z5s9.png"
+    },
+    {
+        "brand": "OPALS",
+        "logo_url": null
+    },
+    {
+        "brand": "PACE",
+        "logo_url": null
+    },
+    {
+        "brand": "PIRELLI",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052876/brand_logos/pbm3fkrryurj3o7uvqme.png"
+    },
+    {
+        "brand": "POWERTRAC",
+        "logo_url": null
+    },
+    {
+        "brand": "Pirelli",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052876/brand_logos/pbm3fkrryurj3o7uvqme.png"
+    },
+    {
+        "brand": "RADAR",
+        "logo_url": null
+    },
+    {
+        "brand": "RANGER",
+        "logo_url": null
+    },
+    {
+        "brand": "RAPID",
+        "logo_url": null
+    },
+    {
+        "brand": "ROADCLAW",
+        "logo_url": null
+    },
+    {
+        "brand": "ROADSHINE",
+        "logo_url": null
+    },
+    {
+        "brand": "ROADSTONE",
+        "logo_url": null
+    },
+    {
+        "brand": "ROYAL BLACK",
+        "logo_url": null
+    },
+    {
+        "brand": "SAFERICH",
+        "logo_url": null
+    },
+    {
+        "brand": "SILVERSTONE",
+        "logo_url": null
+    },
+    {
+        "brand": "SUMAXX",
+        "logo_url": null
+    },
+    {
+        "brand": "SUMITOMO",
+        "logo_url": null
+    },
+    {
+        "brand": "SUNIL",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755454599/tyres/brand_logos/plaqsioqiigmrocelyvh.png"
+    },
+    {
+        "brand": "SUPERIA",
+        "logo_url": null
+    },
+    {
+        "brand": "TOLEDO",
+        "logo_url": null
+    },
+    {
+        "brand": "TOYO",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052934/brand_logos/wirkz8kuuzoj5f58ifly.png"
+    },
+    {
+        "brand": "TRACMAX",
+        "logo_url": null
+    },
+    {
+        "brand": "TRAZANO",
+        "logo_url": null
+    },
+    {
+        "brand": "TRIANGLE",
+        "logo_url": null
+    },
+    {
+        "brand": "WESTLAKE",
+        "logo_url": null
+    },
+    {
+        "brand": "WIDEWAY",
+        "logo_url": null
+    },
+    {
+        "brand": "WINDA",
+        "logo_url": null
+    },
+    {
+        "brand": "WINRUN",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052866/brand_logos/xrtkorw1lvlshzzyzqdh.jpg"
+    },
+    {
+        "brand": "YOKOHAMA",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052875/brand_logos/nshoouovrpozrk8rlaf8.png"
+    },
+    {
+        "brand": "ZETA",
+        "logo_url": "https://res.cloudinary.com/dumznbz3f/image/upload/v1755052862/brand_logos/sawx2ayuqmf2ovbbrmtr.png"
+    },
+    {
+        "brand": "ZETUM",
+        "logo_url": null
+    }
+]
+    
+
+
+
+}
