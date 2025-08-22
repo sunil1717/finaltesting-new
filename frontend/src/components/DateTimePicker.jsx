@@ -52,9 +52,8 @@ export default function DateTimePicker() {
       <div className="flex items-center justify-between mb-2">
         <button
           onClick={() => setWeekStart(weekStart.subtract(7, "day"))}
-          className={`text-sm font-medium ${
-            weekStart.isSame(today, "week") ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          className={`text-sm font-medium ${weekStart.isSame(today, "week") ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           disabled={weekStart.isSame(today, "week")}
         >
           &lt; Prev week
@@ -71,7 +70,30 @@ export default function DateTimePicker() {
         {getWeekDates().map((d) => {
           const isToday = dayjs(d.full).isSame(today, "day");
           const isPast = dayjs(d.full).isBefore(today, "day");
-          const isSunday = d.day === "Sun";
+
+
+          const todayDay = today.day(); 
+
+          let shouldDisable = false;
+
+          // Case 1: Friday → disable Sat & Sun
+          if (todayDay === 5) {
+            shouldDisable =
+              dayjs(d.full).isSame(today.add(1, "day"), "day") || 
+              dayjs(d.full).isSame(today.add(2, "day"), "day");   
+          }
+
+          // Case 2: Saturday → disable Sat (today) & Sun (tomorrow)
+          if (todayDay === 6) {
+            shouldDisable =
+              dayjs(d.full).isSame(today, "day") ||               
+              dayjs(d.full).isSame(today.add(1, "day"), "day");
+          }
+
+          // Case 3: Sunday → disable Sunday (today)
+          if (todayDay === 0) {
+            shouldDisable = dayjs(d.full).isSame(today, "day");  
+          }
 
           if (isPast && !isToday) return null;
 
@@ -83,14 +105,13 @@ export default function DateTimePicker() {
                 setSelectedTime(null);
                 fetchAvailability(d.full); // call backend with req.body { date }
               }}
-              disabled={isToday || isSunday}
-              className={`p-2 rounded-md border text-center ${
-                selectedDate === d.full
-                  ? "bg-red-400 border-red-500"
-                  : isToday || isSunday
+              disabled={shouldDisable}
+              className={`p-2 rounded-md border text-center ${selectedDate === d.full
+                ? "bg-red-400 border-red-500"
+                : shouldDisable
                   ? "bg-gray-200 border-gray-300 cursor-not-allowed"
                   : "bg-white border-gray-300"
-              }`}
+                }`}
             >
               <div className="text-sm font-semibold">{d.day}</div>
               <div className="text-lg">{d.dateNum}</div>
@@ -117,22 +138,20 @@ export default function DateTimePicker() {
                     key={slot.label}
                     onClick={() => setSelectedTime(slot.label)}
                     disabled={availability[slot.label] <= 0}
-                    className={`p-3 rounded-md border text-center ${
-                      selectedTime === slot.label
-                        ? "bg-red-400 border-red-500"
-                        : availability[slot.label] > 0
+                    className={`p-3 rounded-md border text-center ${selectedTime === slot.label
+                      ? "bg-red-400 border-red-500"
+                      : availability[slot.label] > 0
                         ? "bg-white border-gray-300"
                         : "bg-gray-200 border-gray-300 cursor-not-allowed"
-                    }`}
+                      }`}
                   >
                     <div className="font-semibold">{slot.title}</div>
                     <div className="text-sm">{slot.time}</div>
                     <div
-                      className={`text-xs mt-1 ${
-                        availability[slot.label] === 1
-                          ? "text-red-500 font-bold"
-                          : "text-gray-500"
-                      }`}
+                      className={`text-xs mt-1 ${availability[slot.label] === 1
+                        ? "text-red-500 font-bold"
+                        : "text-gray-500"
+                        }`}
                     >
                       {availability[slot.label]} slots left
                     </div>
@@ -144,13 +163,12 @@ export default function DateTimePicker() {
               <button
                 onClick={() => setSelectedTime("flexible")}
                 disabled={availability.flexible <= 0}
-                className={`mt-4 w-full p-3 rounded-md font-semibold ${
-                  selectedTime === "flexible"
-                    ? "bg-red-400 border-red-500"
-                    : availability.flexible > 0
+                className={`mt-4 w-full p-3 rounded-md font-semibold ${selectedTime === "flexible"
+                  ? "bg-red-400 border-red-500"
+                  : availability.flexible > 0
                     ? "bg-gray-200"
                     : "bg-gray-300 cursor-not-allowed"
-                }`}
+                  }`}
               >
                 I'm flexible{" "}
                 <span className="font-normal text-sm">
