@@ -4,6 +4,10 @@ import { useShopStore } from '../store/shopStore'
 import { FaTrash } from "react-icons/fa";
 
 import { useConfirm } from '../components/ConfirmDialog';
+import axios from '../utils/axiosInstance';
+
+import filterOptions from "../data/tyre_unique_values.json";
+
 
 export default function AdminDashboard() {
 
@@ -100,8 +104,8 @@ export default function AdminDashboard() {
   });
 
 
-  const [filterBrand, setFilterBrand] = useState("");
-  const [filterModel, setFilterModel] = useState("");
+
+
 
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
@@ -114,7 +118,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchTyres();
     fetchServiceAreas();
-    
+
     fetchMessages();
     fetchBlogs();
     fetchCoupons();
@@ -339,6 +343,55 @@ export default function AdminDashboard() {
     await deleteBlog(id);
   };
 
+  //----------------------------------------------------
+  //filter  logic here------------------------------------
+  //-------------------------------------------------------------------------------------
+
+  const [FilterTyres, setFilterTyres] = useState([]);
+
+  const [filters, setFilters] = useState({
+    width: '', profile: '', rim: '',
+    brand: '', model: ''
+  });
+
+  // Fetch tyres whenever filters change
+  useEffect(() => {
+    const fetchFilterTyres = async () => {
+      setLoading(true)
+      const params = {};
+      Object.keys(filters).forEach(key => {
+        if (filters[key]) params[key] = filters[key];
+      });
+      const res = await axios.get('/api/tyreall/search', { params });
+      setFilterTyres(res.data);
+      setLoading(false)
+    };
+    fetchFilterTyres();
+    
+  }, [filters]);
+ 
+
+
+  
+
+
+  const handleFilterChange = (e) => {
+    setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+
+  const parsedSizes = filterOptions.SIZE.map(sizeStr => {
+    const match = sizeStr.match(/^(\d{3})\/(\d{2})R(\d{2})$/);
+    return match ? { width: match[1], profile: match[2], rimSize: match[3] } : null;
+  }).filter(Boolean);
+
+  const uniqueWidths = [...new Set(parsedSizes.map(s => s.width))].sort();
+  const uniqueProfiles = [...new Set(parsedSizes.map(s => s.profile))].sort();
+  const uniqueRimSizes = [...new Set(parsedSizes.map(s => s.rimSize))].sort();
+
+  const uniqueModels = FilterTyres.length > 0
+    ? [...new Set(FilterTyres.map(tyre => tyre.Model))]
+    : [];
 
 
 
@@ -379,7 +432,7 @@ export default function AdminDashboard() {
         <div className="space-y-6">
           {/* Loading Overlay with Blur Effect */}
           {loading && (
-            <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+            <div className="fixed inset-0 h-screen backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
               <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold text-gray-700">
                 Processing...
               </div>
@@ -637,144 +690,203 @@ export default function AdminDashboard() {
           {/* Filters */}
           <div className="flex flex-wrap gap-4 items-center">
             <h3>Filter Tyre :</h3>
-            <input
-              type="text"
-              placeholder="Filter by Brand"
-              value={filterBrand}
-              onChange={(e) => setFilterBrand(e.target.value.toLowerCase())}
-              className="border px-3 py-2 rounded text-sm w-full md:w-60"
-            />
-            <input
-              type="text"
-              placeholder="Filter by Model"
-              value={filterModel}
-              onChange={(e) => setFilterModel(e.target.value.toLowerCase())}
-              className="border px-3 py-2 rounded text-sm w-full md:w-60"
-            />
+
+            <select
+              value={filters.brand}
+              name='brand'
+              onChange={handleFilterChange}
+              className={`w-full md:w-60 border ${filters.brand ? "bg-gray-200" : ""} border-gray-500 rounded px-3 py-2`}
+            >
+              <option value="">All Brands</option>
+              {filterOptions.Brand.map((b) => (
+                <option key={b} value={b}>{b}</option>
+              ))}
+            </select>
+            <select
+              value={filters.model}
+              name='model'
+              onChange={handleFilterChange}
+              className={`w-full md:w-60 border ${filters.model ? "bg-gray-200" : ""} border-gray-500 rounded px-3 py-2`}
+            >
+              <option value="">All Models</option>
+              {uniqueModels.map((t) => (
+                <option key={t} value={t}>{t}</option>
+              ))}
+            </select>
+
+
+
+            <select type="number"
+              name="width"
+              placeholder="Width"
+              value={filters.width}
+              onChange={handleFilterChange}
+              className={`w-full md:w-60 border ${filters.width ? "bg-gray-200" : ""} border-gray-500 rounded px-3 py-2`}
+            >
+              <option value="">All Width</option>
+
+              {uniqueWidths.map((w) => (
+                <option key={w} value={w}>{w}</option>
+              ))
+
+              }
+            </select>
+            <select type="number"
+              name="profile"
+              placeholder="Profile"
+              value={filters.profile}
+              onChange={handleFilterChange}
+              className={`w-full md:w-60 border ${filters.profile ? "bg-gray-200" : ""} border-gray-500 rounded px-3 py-2`}
+            >
+
+              <option value="">All Profile</option>
+
+              {uniqueProfiles.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))
+
+              }
+
+            </select>
+            <select type="number"
+              name="rim"
+              placeholder="Rim Size"
+              value={filters.rim}
+              onChange={handleFilterChange}
+              className={`w-full md:w-60 border ${filters.rim ? "bg-gray-200" : ""} border-gray-500 rounded px-3 py-2`}
+            >
+
+              <option value="">All Rimsize</option>
+
+              {uniqueRimSizes.map((r) => (
+                <option key={r} value={r}>{r}</option>
+              ))
+
+              }
+
+            </select>
+
+
+
           </div>
 
           {/* Tyre Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {tyres
-              .filter((tyre) =>
-                tyre.Brand?.toLowerCase().includes(filterBrand || '') &&
-                tyre.Model?.toLowerCase().includes(filterModel || '')
-              )
-              .map((tyre) => (
-                <div key={tyre._id} className="border rounded-lg p-4 bg-white shadow-md space-y-2">
-                  <img
-                    src={tyre.image_url}
-                    alt={`${tyre.Brand} ${tyre.Model}`}
-                    className="w-full h-32 object-contain mb-2"
-                  />
-                  <div className="text-sm">
-                    <p><strong>Brand:</strong> {tyre.Brand}</p>
-                    <p><strong>Model:</strong> {tyre.Model}</p>
-                    <p><strong>Size:</strong> {tyre.SIZE}</p>
-                    <p><strong>Load/Speed:</strong> {tyre["LOAD/SPEED RATING"]}</p>
-                    <p><strong>Type:</strong> {tyre.Type}</p>
-                    <p><strong>Marking:</strong> {tyre.Marking || 'N/A'}</p>
-                    <p><strong>RunFlat:</strong> {tyre.RunFlat || 'N/A'}</p>
-                    <p><strong>Price:</strong> ${tyre["Price Incl GST"]}</p>
-                    <p><strong>Price for 1:</strong> ${tyre["Price for 1"] || 'N/A'}</p>
-                    <p><strong>Price for 2:</strong> ${tyre["Price for 2"] || 'N/A'}</p>
-                    <p><strong>Price for 3:</strong> ${tyre["Price for 3"] || 'N/A'}</p>
-                    <p><strong>Price for 4:</strong> ${tyre["Price for 4"] || 'N/A'}</p>
-                    <p><strong>Price for 5:</strong> ${tyre["Price for 5"] || 'N/A'}</p>
+            {FilterTyres.map((tyre) => (
+              <div key={tyre._id} className="border rounded-lg p-4 bg-white shadow-md space-y-2">
+                <img
+                  src={tyre.image_url}
+                  alt={`${tyre.Brand} ${tyre.Model}`}
+                  className="w-full h-32 object-contain mb-2"
+                />
+                <div className="text-sm">
+                  <p><strong>Brand:</strong> {tyre.Brand}</p>
+                  <p><strong>Model:</strong> {tyre.Model}</p>
+                  <p><strong>Size:</strong> {tyre.SIZE}</p>
+                  <p><strong>Load/Speed:</strong> {tyre["LOAD/SPEED RATING"]}</p>
+                  <p><strong>Type:</strong> {tyre.Type}</p>
+                  <p><strong>Marking:</strong> {tyre.Marking || 'N/A'}</p>
+                  <p><strong>RunFlat:</strong> {tyre.RunFlat || 'N/A'}</p>
+                  <p><strong>Price:</strong> ${tyre["Price Incl GST"]}</p>
+                  <p><strong>Price for 1:</strong> ${tyre["Price for 1"] || 'N/A'}</p>
+                  <p><strong>Price for 2:</strong> ${tyre["Price for 2"] || 'N/A'}</p>
+                  <p><strong>Price for 3:</strong> ${tyre["Price for 3"] || 'N/A'}</p>
+                  <p><strong>Price for 4:</strong> ${tyre["Price for 4"] || 'N/A'}</p>
+                  <p><strong>Price for 5:</strong> ${tyre["Price for 5"] || 'N/A'}</p>
 
-                    <p><strong>In Stock:</strong> {tyre["In Stock"]}</p>
-                    <p><strong>Unloading in 24 Hrs:</strong> {tyre["UNLOADING IN 24 HRS"]}</p>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="space-y-2">
-                    {/* Delete */}
-                    <div className="flex justify-end">
-                      <button
-                        onClick={() => handleDelete(tyre._id)}
-                        className="text-red-600 hover:text-red-800 p-2"
-                        title="Delete Tyre"
-                      >
-                        <FaTrash size={16} />
-                      </button>
-                    </div>
-
-                    {/* Image Upload */}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) handleImageupdate(tyre._id, file);
-                      }}
-                      className="block w-full text-sm text-gray-700"
-                    />
-
-
-                    {/* Price Update */}
-                    <div className="space-y-1">
-                      {["Price for 1", "Price for 2", "Price for 3", "Price for 4", "Price for 5"].map((label) => (
-                        <div key={label} className="flex items-center gap-1">
-                          <label className="text-xs w-20">{label}:</label>
-                          <input
-                            type="number"
-                            defaultValue={tyre[label]}
-                            onChange={(e) => {
-                              const newPrice = e.target.value.trim();
-                              setUpdatedPrices((prev) => ({
-                                ...prev,
-                                [tyre._id]: {
-                                  ...(prev[tyre._id] || {}),
-                                  [label]: newPrice
-                                }
-                              }));
-                            }}
-                            className="w-20 border px-1 py-0.5 rounded text-xs"
-                          />
-                        </div>
-                      ))}
-                      <button
-                        onClick={() => {
-                          if (updatedPrices[tyre._id]) {
-                            handlePriceUpdate(tyre._id, updatedPrices[tyre._id]);
-                          }
-                        }}
-                        className="bg-green-600 text-white text-xs px-2 py-1 rounded hover:bg-green-700"
-                      >
-                        Update Prices
-                      </button>
-                    </div>
-
-
-
-                    {/* Stock Update */}
-                    <div className="flex gap-1 items-center">
-                      <input
-                        type="text"
-                        placeholder="Stock"
-                        defaultValue={tyre["In Stock"]}
-                        onChange={(e) => {
-                          setstockValue(e.target.value.trim())
-                        }}
-                        className="w-16 border px-1 py-0.5 rounded text-xs"
-                      />
-                      <button
-                        onClick={() => {
-
-                          if (stockValue !== undefined && stockValue !== "" && stockValue !== tyre["In Stock"]) {
-                            handleStockupdate(tyre._id, stockValue);
-                          }
-                        }}
-                        className="bg-blue-500 text-white text-xs px-2 py-1 rounded hover:bg-blue-600"
-                      >
-                        Update
-                      </button>
-                    </div>
-
-
-                  </div>
+                  <p><strong>In Stock:</strong> {tyre["In Stock"]}</p>
+                  <p><strong>Unloading in 24 Hrs:</strong> {tyre["UNLOADING IN 24 HRS"]}</p>
                 </div>
-              ))}
+
+                {/* Action Buttons */}
+                <div className="space-y-2">
+                  {/* Delete */}
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => handleDelete(tyre._id)}
+                      className="text-red-600 hover:text-red-800 p-2"
+                      title="Delete Tyre"
+                    >
+                      <FaTrash size={16} />
+                    </button>
+                  </div>
+
+                  {/* Image Upload */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) handleImageupdate(tyre._id, file);
+                    }}
+                    className="block w-full text-sm text-gray-700"
+                  />
+
+
+                  {/* Price Update */}
+                  <div className="space-y-1">
+                    {["Price for 1", "Price for 2", "Price for 3", "Price for 4", "Price for 5"].map((label) => (
+                      <div key={label} className="flex items-center gap-1">
+                        <label className="text-xs w-20">{label}:</label>
+                        <input
+                          type="number"
+                          defaultValue={tyre[label]}
+                          onChange={(e) => {
+                            const newPrice = e.target.value.trim();
+                            setUpdatedPrices((prev) => ({
+                              ...prev,
+                              [tyre._id]: {
+                                ...(prev[tyre._id] || {}),
+                                [label]: newPrice
+                              }
+                            }));
+                          }}
+                          className="w-20 border px-1 py-0.5 rounded text-xs"
+                        />
+                      </div>
+                    ))}
+                    <button
+                      onClick={() => {
+                        if (updatedPrices[tyre._id]) {
+                          handlePriceUpdate(tyre._id, updatedPrices[tyre._id]);
+                        }
+                      }}
+                      className="bg-green-600 text-white text-xs px-2 py-1 rounded hover:bg-green-700"
+                    >
+                      Update Prices
+                    </button>
+                  </div>
+
+
+
+                  {/* Stock Update */}
+                  <div className="flex gap-1 items-center">
+                    <input
+                      type="text"
+                      placeholder="Stock"
+                      defaultValue={tyre["In Stock"]}
+                      onChange={(e) => {
+                        setstockValue(e.target.value.trim())
+                      }}
+                      className="w-16 border px-1 py-0.5 rounded text-xs"
+                    />
+                    <button
+                      onClick={() => {
+
+                        if (stockValue !== undefined && stockValue !== "" && stockValue !== tyre["In Stock"]) {
+                          handleStockupdate(tyre._id, stockValue);
+                        }
+                      }}
+                      className="bg-blue-500 text-white text-xs px-2 py-1 rounded hover:bg-blue-600"
+                    >
+                      Update
+                    </button>
+                  </div>
+
+
+                </div>
+              </div>
+            ))}
           </div>
 
 
@@ -787,7 +899,7 @@ export default function AdminDashboard() {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {loading && (
-              <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+              <div className="fixed h-screen inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
                 <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold text-gray-700">
                   Processing...
                 </div>
@@ -846,7 +958,7 @@ export default function AdminDashboard() {
       {tab === 'contact' && (
         <div className="space-y-4">
           {loading && (
-            <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+            <div className="fixed h-screen inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
               <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold text-gray-700">
                 Processing...
               </div>
@@ -898,7 +1010,7 @@ export default function AdminDashboard() {
       {tab === 'blogs' && (
         <div className="space-y-6">
           {loading && (
-            <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+            <div className="fixed h-screen inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
               <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold text-gray-700">
                 Processing...
               </div>
@@ -982,7 +1094,7 @@ export default function AdminDashboard() {
           {/* List of Coupons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2">
             {loading && (
-              <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+              <div className="fixed h-screen inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
                 <div className="bg-white px-6 py-4 rounded shadow text-lg font-semibold text-gray-700">
                   Processing...
                 </div>

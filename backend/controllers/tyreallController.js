@@ -36,7 +36,7 @@ const addTyre = async (req, res) => {
       "Price Incl GST": price,
       "In Stock": inStock,
       "UNLOADING IN 24 HRS": unloading,
-      
+
       category,
     } = req.body;
 
@@ -45,7 +45,7 @@ const addTyre = async (req, res) => {
     }
 
 
-     // Validate category
+    // Validate category
     const additions = priceAdditions[category];
 
     if (!additions) {
@@ -53,10 +53,10 @@ const addTyre = async (req, res) => {
     }
 
 
-      const basePrice = parseFloat(price);
-      if (isNaN(basePrice)) {
-  return res.status(400).json({ error: "Invalid price value" });
-}
+    const basePrice = parseFloat(price);
+    if (isNaN(basePrice)) {
+      return res.status(400).json({ error: "Invalid price value" });
+    }
 
     // Calculate and round prices
     const price1 = Math.round(basePrice + additions[1]);
@@ -65,31 +65,31 @@ const addTyre = async (req, res) => {
     const price4 = Math.round(basePrice + additions[4]);
     const price5 = Math.round(basePrice + additions[5]);
 
- // Tyre image
-let imageUrl = "";
-if (req.files && req.files.image) {
-  const result = await new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "tyres" },
-      (err, result) => (err ? reject(err) : resolve(result))
-    );
-    stream.end(req.files.image[0].buffer);
-  });
-  imageUrl = result.secure_url;
-}
+    // Tyre image
+    let imageUrl = "";
+    if (req.files && req.files.image) {
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "tyres" },
+          (err, result) => (err ? reject(err) : resolve(result))
+        );
+        stream.end(req.files.image[0].buffer);
+      });
+      imageUrl = result.secure_url;
+    }
 
-// Brand logo upload
-let brandLogoUrl = "";
-if (req.files && req.files.brandLogo) {
-  const result = await new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "tyres/brand_logos" },
-      (err, result) => (err ? reject(err) : resolve(result))
-    );
-    stream.end(req.files.brandLogo[0].buffer);
-  });
-  brandLogoUrl = result.secure_url;
-}
+    // Brand logo upload
+    let brandLogoUrl = "";
+    if (req.files && req.files.brandLogo) {
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "tyres/brand_logos" },
+          (err, result) => (err ? reject(err) : resolve(result))
+        );
+        stream.end(req.files.brandLogo[0].buffer);
+      });
+      brandLogoUrl = result.secure_url;
+    }
 
 
     const tyre = new Tyre({
@@ -100,11 +100,11 @@ if (req.files && req.files.brandLogo) {
       Type,
       Marking,
       RunFlat,
-      "Price for 1": price1 ,
-      "Price for 2": price2 ,
-      "Price for 3": price3 ,
-      "Price for 4": price4 ,
-      "Price for 5": price5 ,
+      "Price for 1": price1,
+      "Price for 2": price2,
+      "Price for 3": price3,
+      "Price for 4": price4,
+      "Price for 5": price5,
       "Price Incl GST": basePrice,
       "In Stock": inStock,
       "UNLOADING IN 24 HRS": unloading,
@@ -303,9 +303,9 @@ function parseSize(sizeStr) {
 }
 
 // Flexible search
- const searchTyres = async (req, res) => {
+const searchTyres = async (req, res) => {
   try {
-    const { width, profile, rim, runflat, brand, type ,speed_rating, load_index } = req.query;
+    const { width, profile, rim, runflat, brand, model, type, speed_rating, load_index } = req.query;
     let query = {};
 
     // SIZE filter
@@ -318,44 +318,49 @@ function parseSize(sizeStr) {
     }
 
     // RunFlat filter
-   if (runflat) {
-  if (runflat === "Yes") {
-    query.RunFlat = "YES";
-  } else if (runflat === "No") {
-    query.$or = [
-      { RunFlat: "NO" },
-      { RunFlat: null },
-      { RunFlat: "" },
-      { RunFlat: { $exists: false } },
-      { RunFlat: { $type: "double" } } // catches BSON Double(NaN)
-    ];
-  }
-}
+    if (runflat) {
+      if (runflat === "Yes") {
+        query.RunFlat = "YES";
+      } else if (runflat === "No") {
+        query.$or = [
+          { RunFlat: "NO" },
+          { RunFlat: null },
+          { RunFlat: "" },
+          { RunFlat: { $exists: false } },
+          { RunFlat: { $type: "double" } } // catches BSON Double(NaN)
+        ];
+      }
+    }
 
     // Brand filter
     if (brand) query.Brand = brand;
 
+    // Model filter
+    if (model) {
+      query.Model = { $regex: model, $options: 'i' };
+    }
+
     // Type filter
     if (type) query.Type = { $in: Array.isArray(type) ? type : [type] };
 
-     // Speed Rating filter (last character of LOAD/SPEED RATING)
+    // Speed Rating filter (last character of LOAD/SPEED RATING)
     if (speed_rating) {
       query['LOAD/SPEED RATING'] = { $regex: `${speed_rating}$`, $options: 'i' };
-     }
+    }
 
-     // Load Index filter (number part of LOAD/SPEED RATING)
+    // Load Index filter (number part of LOAD/SPEED RATING)
     if (load_index) {
-      query['LOAD/SPEED RATING'] = { 
-        $regex: `^${load_index}`, 
-        $options: 'i' 
+      query['LOAD/SPEED RATING'] = {
+        $regex: `^${load_index}`,
+        $options: 'i'
       };
     }
 
-     // Combine both load_index & speed_rating if both exist
+    // Combine both load_index & speed_rating if both exist
     if (load_index && speed_rating) {
-      query['LOAD/SPEED RATING'] = { 
-        $regex: `^${load_index}${speed_rating}$`, 
-        $options: 'i' 
+      query['LOAD/SPEED RATING'] = {
+        $regex: `^${load_index}${speed_rating}$`,
+        $options: 'i'
       };
     }
 
