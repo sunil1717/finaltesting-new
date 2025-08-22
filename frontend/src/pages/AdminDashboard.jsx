@@ -114,7 +114,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchTyres();
     fetchServiceAreas();
-    fetchBookings();
+    
     fetchMessages();
     fetchBlogs();
     fetchCoupons();
