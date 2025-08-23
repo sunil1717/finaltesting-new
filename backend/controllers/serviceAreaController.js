@@ -76,3 +76,13 @@ exports.removeServiceArea = async (req, res) => {
   res.json({ message: 'Service area removed', area: deleted });
 };
 
+// Get all unique suburbs
+exports.getAllSuburbs = async (req, res) => {
+  try {
+    const suburbs = await ServiceArea.distinct("suburb"); 
+    res.status(200).json({ suburbs });
+  } catch (error) {
+    console.error("Error fetching suburbs:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

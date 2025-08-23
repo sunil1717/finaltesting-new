@@ -41,6 +41,8 @@ import Inspections from "./pages/services/Inspections"
 
 
 import ScrollToTop from './components/ScrollToTop';
+import AreasWeServe from './pages/AreasWeServe';
+import SuburbDetail from './pages/SuburbDetail';
 
 
 
@@ -73,7 +75,12 @@ export default function App() {
 
       <Route path="/about-us" element={<AboutUs/>} />
       <Route path="/services" element={<Services/>} />
-      <Route path="/help-center" element={<HelpCenter/>} />
+      {/* <Route path="/help-center" element={<HelpCenter/>} /> */}
+
+      <Route path="/area-we-serve" element={<AreasWeServe/>} />
+      <Route path="/area-we-serve/:suburb" element={<SuburbDetail/>} />
+
+
 
 
       {/* All Services Route*/}

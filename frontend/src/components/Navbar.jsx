@@ -102,7 +102,7 @@ export default function Navbar({ onShopTyreClick }) {
 
            
             <a href="/blogs" className={` ${currentPath === '/blogs' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Blog</a>
-            <a href="/help-center" className={` ${currentPath === '/help-center' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Help center</a>
+            <a href="/area-we-serve" className={` ${currentPath === '/area-we-serve' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Area We Serve</a>
 
           </nav>
 
@@ -161,7 +161,7 @@ export default function Navbar({ onShopTyreClick }) {
 
               
               <a href="/blogs" className={`block ${currentPath === '/blogs' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Blog</a>
-              <a href="/help-center" className={` ${currentPath === '/help-center' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Help center</a>
+              <a href="/area-we-serve" className={` ${currentPath === '/area-we-serve' ? 'text-red-600 font-semibold' : 'hover:text-red-600'}`}>Area We Serve</a>
 
 
 
