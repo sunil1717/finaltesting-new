@@ -42,7 +42,7 @@ import Inspections from "./pages/services/Inspections"
 
 import ScrollToTop from './components/ScrollToTop';
 import AreasWeServe from './pages/AreasWeServe';
-import SuburbDetail from './pages/SuburbDetail';
+import SuburbPage from './pages/SuburbPage';
 
 
 
@@ -78,7 +78,7 @@ export default function App() {
       {/* <Route path="/help-center" element={<HelpCenter/>} /> */}
 
       <Route path="/area-we-serve" element={<AreasWeServe/>} />
-      <Route path="/area-we-serve/:suburb" element={<SuburbDetail/>} />
+      <Route path="/area-we-serve/:suburb" element={<SuburbPage/>} />
 
 
 
