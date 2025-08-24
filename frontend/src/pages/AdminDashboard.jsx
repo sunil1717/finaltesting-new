@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef,useCallback } from 'react';
 import { useAdminStore } from '../store/adminStore';
 import { useShopStore } from '../store/shopStore'
 import { FaTrash } from "react-icons/fa";
@@ -354,22 +354,61 @@ export default function AdminDashboard() {
     brand: '', model: ''
   });
 
+  const [page, setPage] = useState(1);
+const [hasMore, setHasMore] = useState(true);
+
   // Fetch tyres whenever filters change
-  useEffect(() => {
-    const fetchFilterTyres = async () => {
-      setLoading(true)
-      const params = {};
-      Object.keys(filters).forEach(key => {
-        if (filters[key]) params[key] = filters[key];
-      });
-      const res = await axios.get('/api/tyreall/search', { params });
-      setFilterTyres(res.data.tyres);
-      setLoading(false)
-    };
-    fetchFilterTyres();
-    
-  }, [filters]);
+const fetchFilterTyres = async (pageNumber = 1, isNewFilter = false) => {
+  setLoading(true);
+
+  const params = { page: pageNumber, limit: 50 }; // backend pagination
+  Object.keys(filters).forEach(key => {
+    if (filters[key]) params[key] = filters[key];
+  });
+
+  const res = await axios.get('/api/tyreall/search', { params });
+
+  if (isNewFilter) {
+    setFilterTyres(res.data.tyres); // reset when filters change
+  } else {
+    setFilterTyres(prev => [...prev, ...res.data.tyres]); // append for infinite scroll
+  }
+
+  setHasMore(pageNumber < res.data.totalPages); // check if more pages exist
+  setLoading(false);
+};
+
+useEffect(() => {
+  setPage(1);
+  fetchFilterTyres(1, true); // fresh fetch when filter changes
+}, [filters]);
+
+
+
+const observer = useRef();
+
+const lastTyreRef = useCallback(
+  (node) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prev => prev + 1);
+      }
+    });
+
+    if (node) observer.current.observe(node);
+  },
+  [loading, hasMore]
+);
+
  
+useEffect(() => {
+  if (page > 1) {
+    fetchFilterTyres(page, false);
+  }
+}, [page]);
 
 
   
@@ -772,8 +811,16 @@ export default function AdminDashboard() {
 
           {/* Tyre Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {FilterTyres.map((tyre) => (
-              <div key={tyre._id} className="border rounded-lg p-4 bg-white shadow-md space-y-2">
+            {FilterTyres.map((tyre,index) =>
+            
+             
+            
+            { const isLastElement = index === FilterTyres.length - 1;
+              
+              return (
+              
+
+              <div key={tyre._id} ref={isLastElement ? lastTyreRef : null} className="border rounded-lg p-4 bg-white shadow-md space-y-2">
                 <img
                   src={tyre.image_url}
                   alt={`${tyre.Brand} ${tyre.Model}`}
@@ -886,7 +933,8 @@ export default function AdminDashboard() {
 
                 </div>
               </div>
-            ))}
+            )
+            })}
           </div>
 
 

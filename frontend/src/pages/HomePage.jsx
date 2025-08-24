@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo,useCallback } from 'react';
 import Navbar from '../components/Navbar';
 import WhyUsSection from '../components/WhyUsSection';
 import TestimonialsSection from '../components/TestimonialsSection';
@@ -63,7 +63,10 @@ export default function HomePage() {
   const [hasSearched, setHasSearched] = useState(false);
 
 
-
+ const [loading, setLoading] = useState(() => {
+    const hasLoaded = sessionStorage.getItem("hasSeenLogo");
+    return !hasLoaded;
+  });
 
   const [selectedPriceOption, setSelectedPriceOption] = useState({});
 
@@ -149,23 +152,74 @@ export default function HomePage() {
   });
 
 
-  // Fetch tyres whenever filters change
-  useEffect(() => {
-    const fetchTyres = async () => {
-      const params = {};
-      Object.keys(filters).forEach(key => {
-        if (filters[key]) params[key] = filters[key];
-      });
-      const res = await axios.get('/api/tyreall/search', { params });
-      setTyres(res.data.tyres);
-    };
-    fetchTyres();
-  }, [filters]);
+    const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [Totaldata, setTotaldata] = useState("");
+
+  
+
+   // Fetch tyres whenever filters change
+const fetchFilterTyres = async (pageNumber = 1, isNewFilter = false) => {
+  setSearching(true);
+
+  const params = { page: pageNumber, limit: 50 }; // backend pagination
+  Object.keys(filters).forEach(key => {
+    if (filters[key]) params[key] = filters[key];
+  });
+
+  const res = await axios.get('/api/tyreall/search', { params });
+
+  if (isNewFilter) {
+    setTyres(res.data.tyres); // reset when filters change
+    setTotaldata(res.data.total);
+  } else {
+    setTyres(prev => [...prev, ...res.data.tyres]); // append for infinite scroll
+  }
+
+  setHasMore(pageNumber < res.data.totalPages); // check if more pages exist
+  setSearching(false);
+};
+
+useEffect(() => {
+  setPage(1);
+  fetchFilterTyres(1, true); // fresh fetch when filter changes
+}, [filters]);
+
+
+
+const observer = useRef();
+
+const lastTyreRef = useCallback(
+  (node) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prev => prev + 1);
+      }
+    });
+
+    if (node) observer.current.observe(node);
+  },
+  [loading, hasMore]
+);
+
+useEffect(() => {
+  if (page > 1) {
+    fetchFilterTyres(page, false);
+  }
+}, [page]);
+
 
   const handleChange = (e) => {
     setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+
+
+
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -454,10 +508,7 @@ export default function HomePage() {
 
 
   const [showTopBtn, setShowTopBtn] = useState(false);
-  const [loading, setLoading] = useState(() => {
-    const hasLoaded = sessionStorage.getItem("hasSeenLogo");
-    return !hasLoaded;
-  });
+ 
 
 
   useEffect(() => {
@@ -1092,7 +1143,7 @@ export default function HomePage() {
 
                 {/* Total count */}
                 <div className="text-gray-600 text-sm">
-                  Total: <span className="font-semibold text-gray-900">{tyres.length} {tyres.length <= 1 ? "Result" : "Results"}</span>
+                  Total: <span className="font-semibold text-gray-900">{Totaldata} {Totaldata <= 1 ? "Result" : "Results"}</span>
                 </div>
               </div>
             </div>
@@ -1110,11 +1161,15 @@ export default function HomePage() {
 
                   {filteredResults.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                      {filteredResults.map((tyre, index) => (
-                        <div key={getTyreKey(tyre) + index}>
+                      {filteredResults.map((tyre, index) => {
+
+                        const isLastElement = index === tyres.length - 1;
+                        
+                        return(
+                        <div ref={isLastElement ? lastTyreRef : null} key={getTyreKey(tyre) + index}>
                           {renderTyreCard(tyre)}
                         </div>
-                      ))}
+                      )})}
                     </div>
                   ) : (
                     hasSearched && !searching && (
