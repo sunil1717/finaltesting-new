@@ -30,7 +30,7 @@ const bookingSlotRoutes = require("./routes/bookingSlotRoutes");
 
 
 const app = express();
-app.use(cors({ origin: 'https://finaltesting-new-pp1c.vercel.app' }));
+app.use(cors({ origin:'https://finaltesting-new-3g7r.vercel.app' }));
 app.use(express.json());
 
 
