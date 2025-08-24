@@ -305,7 +305,7 @@ function parseSize(sizeStr) {
 // Flexible search
 const searchTyres = async (req, res) => {
   try {
-    const { width, profile, rim, runflat, brand, model, type, speed_rating, load_index } = req.query;
+    const { width, profile, rim, runflat, brand, model, type, speed_rating, load_index, page = 1, limit = 50 } = req.query;
     let query = {};
 
     // SIZE filter
@@ -364,8 +364,25 @@ const searchTyres = async (req, res) => {
       };
     }
 
-    const tyres = await Tyre.find(query);
-    res.json(tyres);
+
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+
+
+   const tyres = await Tyre.find(query)
+  .skip((pageNumber - 1) * limitNumber)
+  .limit(limitNumber);
+
+  const total = await Tyre.countDocuments(query);
+
+    res.json({
+  tyres,
+  page: pageNumber,
+  limit: limitNumber,
+  total,
+  totalPages: Math.ceil(total / limitNumber)
+});
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

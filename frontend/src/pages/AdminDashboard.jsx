@@ -363,7 +363,7 @@ export default function AdminDashboard() {
         if (filters[key]) params[key] = filters[key];
       });
       const res = await axios.get('/api/tyreall/search', { params });
-      setFilterTyres(res.data);
+      setFilterTyres(res.data.tyres);
       setLoading(false)
     };
     fetchFilterTyres();

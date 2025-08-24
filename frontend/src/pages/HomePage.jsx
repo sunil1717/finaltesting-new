@@ -157,7 +157,7 @@ export default function HomePage() {
         if (filters[key]) params[key] = filters[key];
       });
       const res = await axios.get('/api/tyreall/search', { params });
-      setTyres(res.data);
+      setTyres(res.data.tyres);
     };
     fetchTyres();
   }, [filters]);
